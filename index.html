@@ -85,7 +85,7 @@
         for (let i = 1; i < rows.length; i++) {
           const [numeroMese, annoCSV, codiceVal] = rows[i].split(",");
           
-          console.log("Mese e anno CSV:", numeroMese, annoCSV); // Debug
+          console.log("Riga CSV:", rows[i]);  // Debug
 
           if (parseInt(numeroMese) === mese && parseInt(annoCSV) === anno) {
             codice = codiceVal.trim();
