@@ -44,7 +44,7 @@
       margin: 5px;
     }
     .footer {
-      margin-top: 50px;
+      margin-top: 40px;
       font-size: 1em;
       color: #555;
     }
@@ -68,36 +68,32 @@
   </div>
 
   <script>
-    const csvURL = "https://raw.githubusercontent.com/damianopin/codice-sbarra/main/codici.csv";  // URL del tuo file CSV su GitHub
+    const sheetID = "15hZDRDJIFAycOrrK1b5YzsO82RPyNNnHrKC0wKfYV1g";
+    const sheetName = "Foglio1";
+    const url = `https://docs.google.com/spreadsheets/d/${sheetID}/gviz/tq?tqx=out:json&sheet=${sheetName}`;
 
-    fetch(csvURL)
+    fetch(url)
       .then(res => res.text())
       .then(data => {
-        const rows = data.split("\n");
+        const json = JSON.parse(data.substr(47).slice(0, -2));
         const today = new Date();
-        const mese = today.getMonth() + 1; // Ottiene il numero del mese corrente
+        const mese = today.getMonth() + 1;
         const anno = today.getFullYear();
-        let codice = "Codice non trovato";
+        const righe = json.table.rows;
 
-        console.log("Mese corrente:", mese, "Anno corrente:", anno); // Debug
+        for (let i = 0; i < righe.length; i++) {
+          const meseVal = parseInt(righe[i].c[0].v);
+          const annoVal = parseInt(righe[i].c[1].v);
+          const codice = righe[i].c[2].v;
 
-        // Legge il CSV e trova il codice del mese corrente
-        for (let i = 1; i < rows.length; i++) {
-          const [numeroMese, annoCSV, codiceVal] = rows[i].split(";");  // Separatore cambiato a ";"
-          
-          console.log("Riga CSV:", rows[i]);  // Debug
-
-          // Confronta mese e anno
-          if (parseInt(numeroMese) === mese && parseInt(annoCSV) === anno) {
-            codice = codiceVal.trim();
-            console.log("Codice trovato:", codice); // Debug
-            break;
+          if (meseVal === mese && annoVal === anno) {
+            document.getElementById("codice-sbarra").innerHTML =
+              `Codice sbarra del mese:<br><span class="codice">${codice}</span>`;
+            return;
           }
         }
 
-        // Visualizza il codice trovato
-        document.getElementById("codice-sbarra").innerHTML = 
-          `Codice sbarra del mese:<br><span class="codice">${codice}</span>`;
+        document.getElementById("codice-sbarra").textContent = "Codice non trovato.";
       })
       .catch(() => {
         document.getElementById("codice-sbarra").textContent = "Errore nel caricamento del codice.";
