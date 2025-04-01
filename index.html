@@ -83,7 +83,7 @@
 
         // Legge il CSV e trova il codice del mese corrente
         for (let i = 1; i < rows.length; i++) {
-          const [numeroMese, annoCSV, codiceVal] = rows[i].split(",");
+          const [numeroMese, annoCSV, codiceVal] = rows[i].split(";");  // Separatore cambiato a ";"
           
           console.log("Riga CSV:", rows[i]);  // Debug
 
