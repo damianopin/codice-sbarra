@@ -1,105 +1,32 @@
-<!DOCTYPE html>
-<html lang="it">
-<head>
-  <meta charset="UTF-8">
-  <title>Codice Sbarra - Consorzio Vedroni</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      padding-top: 40px;
-      background: #f5f5f5;
-      margin: 0;
-    }
-    img {
-      max-width: 300px;
-      margin-bottom: 20px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .box {
-      display: inline-block;
-      padding: 30px 50px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 0 8px rgba(0,0,0,0.1);
-      margin-top: 20px;
-      width: 90%;
-      max-width: 400px;
-    }
-    .codice {
-      font-size: 2em;
-      color: #1a73e8;
-      font-weight: bold;
-      line-height: 1.2em;
-    }
-    .arrows {
-      font-size: 1.5em;
-      display: block;
-      margin-top: 10px;
-    }
-    .arrow-up, .arrow-down {
-      font-size: 2.5em;
-      margin: 5px;
-    }
-    .footer {
-      margin-top: 50px;
-      font-size: 1em;
-      color: #555;
-    }
-    .footer a {
-      color: #1a73e8;
-      text-decoration: none;
-    }
-  </style>
-</head>
-<body>
-  <img src="logo.png" alt="Logo Consorzio Vedroni" />
-  <div class="box">
-    <div id="codice-sbarra">
-      Codice sbarra del mese:<br>
-      <span class="codice">Caricamento in corso...</span>
-    </div>
-    <div class="arrows">
-      <div>Entrata: <span class="arrow-up">↑</span></div>
-      <div>Uscita: <span class="arrow-down">↓</span></div>
-    </div>
-  </div>
+fetch(csvURL)
+  .then(res => res.text())
+  .then(data => {
+    const rows = data.split("\n");
+    const today = new Date();
+    const mese = today.toLocaleString("default", { month: "long" });
+    const anno = today.getFullYear();
+    let codice = "Codice non trovato";
 
-  <script>
-    const csvURL = "https://raw.githubusercontent.com/damianopin/codice-sbarra/main/codici.csv";  // URL del tuo file CSV su GitHub
+    console.log("Mese corrente:", mese, "Anno corrente:", anno); // Debug
 
-    fetch(csvURL)
-      .then(res => res.text())
-      .then(data => {
-        const rows = data.split("\n");
-        const today = new Date();
-        const mese = today.toLocaleString("default", { month: "long" });
-        const anno = today.getFullYear();
-        let codice = "Codice non trovato";
+    // Legge il CSV e trova il codice del mese corrente
+    for (let i = 1; i < rows.length; i++) {
+      const [meseAnno, codiceVal] = rows[i].split(",");
+      const [meseCSV, annoCSV] = meseAnno.split(" ");
+      
+      console.log("Mese e anno CSV:", meseAnno); // Debug
 
-        // Legge il CSV e trova il codice del mese corrente
-        for (let i = 1; i < rows.length; i++) {
-          const [meseAnno, codiceVal] = rows[i].split(",");
-          const [meseCSV, annoCSV] = meseAnno.split(" ");
+      if (mese === meseCSV && anno == annoCSV) {
+        codice = codiceVal.trim();
+        console.log("Codice trovato:", codice); // Debug
+        break;
+      }
+    }
 
-          if (mese === meseCSV && anno == annoCSV) {
-            codice = codiceVal.trim();
-            break;
-          }
-        }
-
-        // Visualizza il codice trovato
-        document.getElementById("codice-sbarra").innerHTML = `Codice sbarra del mese:<br><span class="codice">${codice}</span>`;
-      })
-      .catch(() => {
-        document.getElementById("codice-sbarra").textContent = "Errore nel caricamento del codice.";
-      });
-  </script>
-
-  <div class="footer">
-    <p>Questa pagina è stata creata da <strong>Damiano X Pinazza</strong><br>In caso di necessità, puoi contattarmi all'indirizzo email: <a href="mailto:damiano.pinazza@gmail.com">damiano.pinazza@gmail.com</a>.</p>
-  </div>
-</body>
-</html>
+    // Visualizza il codice trovato
+    document.getElementById("codice-sbarra").innerHTML = 
+      `Codice sbarra del mese:<br><span class="codice">${codice}</span>`;
+  })
+  .catch(() => {
+    document.getElementById("codice-sbarra").textContent = "Errore nel caricamento del codice.";
+  });
