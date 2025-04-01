@@ -57,7 +57,9 @@
 <body>
   <img src="logo.png" alt="Logo Consorzio Vedroni" />
   <div class="box">
-    <div id="nome-mese">Mese: Caricamento in corso...</div>
+    <div id="nome-mese">
+      <!-- Nome del mese verrà visualizzato qui -->
+    </div>
     <div id="codice-sbarra">
       Codice sbarra del mese:<br>
       <span class="codice">Caricamento in corso...</span>
@@ -90,10 +92,10 @@
 
         // Visualizza il nome del mese
         const nomeMese = mesiItaliani[mese - 1];
-        document.getElementById("nome-mese").innerHTML = `Mese: ${nomeMese}`;
+        document.getElementById("nome-mese").innerHTML = `<span class="codice">${nomeMese}</span>`;
 
         let codice = "Codice non trovato.";
-        
+
         // Legge il CSV e trova il codice del mese corrente
         for (let i = 0; i < righe.length; i++) {
           const meseVal = parseInt(righe[i].c[0].v);
