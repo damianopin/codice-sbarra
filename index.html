@@ -57,6 +57,7 @@
 <body>
   <img src="logo.png" alt="Logo Consorzio Vedroni" />
   <div class="box">
+    <div id="nome-mese">Mese: Caricamento in corso...</div>
     <div id="codice-sbarra">
       Codice sbarra del mese:<br>
       <span class="codice">Caricamento in corso...</span>
@@ -81,12 +82,26 @@
         const anno = today.getFullYear();
         const righe = json.table.rows;
 
+        // Lista dei mesi in italiano
+        const mesiItaliani = [
+          "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno", 
+          "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
+        ];
+
+        // Visualizza il nome del mese
+        const nomeMese = mesiItaliani[mese - 1];
+        document.getElementById("nome-mese").innerHTML = `Mese: ${nomeMese}`;
+
+        let codice = "Codice non trovato.";
+        
+        // Legge il CSV e trova il codice del mese corrente
         for (let i = 0; i < righe.length; i++) {
           const meseVal = parseInt(righe[i].c[0].v);
           const annoVal = parseInt(righe[i].c[1].v);
-          const codice = righe[i].c[2].v;
+          const codiceVal = righe[i].c[2].v;
 
           if (meseVal === mese && annoVal === anno) {
+            codice = codiceVal;
             document.getElementById("codice-sbarra").innerHTML =
               `Codice sbarra del mese:<br><span class="codice">${codice}</span>`;
             return;
