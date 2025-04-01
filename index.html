@@ -81,21 +81,21 @@
       .then(data => {
         const json = JSON.parse(data.substr(47).slice(0, -2));
         const today = new Date();
-        const mese = today.getMonth() + 1;
+        const mese = today.getMonth(); // da 0 a 11
         const anno = today.getFullYear();
         const mesiItaliani = [
           "Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
           "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre"
         ];
-        const nomeMese = mesiItaliani[mese - 1];
+        const nomeMese = mesiItaliani[mese];
         const righe = json.table.rows;
 
         for (let i = 0; i < righe.length; i++) {
-          const meseVal = parseInt(righe[i].c[0].v);
-          const annoVal = parseInt(righe[i].c[1].v);
-          const codice = righe[i].c[2].v;
+          const meseVal = righe[i].c[0]?.v?.toLowerCase();
+          const annoVal = parseInt(righe[i].c[1]?.v);
+          const codice = righe[i].c[2]?.v;
 
-          if (meseVal === mese && annoVal === anno) {
+          if (meseVal === nomeMese.toLowerCase() && annoVal === anno) {
             document.getElementById("codice-sbarra").innerHTML = `
               <div class="descrizione">Codice sbarra del mese:</div>
               <div class="codice">${nomeMese} ${anno}</div>
