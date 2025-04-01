@@ -28,6 +28,11 @@
       width: 90%;
       max-width: 400px;
     }
+    .descrizione {
+      font-size: 1em;
+      color: #000;
+      font-weight: normal;
+    }
     .codice {
       font-size: 2em;
       color: #1a73e8;
@@ -58,7 +63,7 @@
   <img src="logo.png" alt="Logo Consorzio Vedroni" />
   <div class="box">
     <div id="codice-sbarra">
-      <span class="codice">Caricamento in corso...</span>
+      <div class="codice">Caricamento in corso...</div>
     </div>
     <div class="arrows">
       <div>Entrata: <span class="arrow-up">↑</span></div>
@@ -92,7 +97,8 @@
 
           if (meseVal === mese && annoVal === anno) {
             document.getElementById("codice-sbarra").innerHTML = `
-              <div class="codice">Codice sbarra del mese: ${nomeMese} ${anno}</div>
+              <div class="descrizione">Codice sbarra del mese:</div>
+              <div class="codice">${nomeMese} ${anno}</div>
               <div class="codice">${codice}</div>
             `;
             return;
