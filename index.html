@@ -12,7 +12,7 @@
       margin: 0;
     }
     img {
-      max-width: 500px;
+      max-width: 400px;
       margin-bottom: 30px;
       display: block;
       margin-left: auto;
@@ -42,12 +42,28 @@
       color: #1a73e8;
       text-decoration: none;
     }
+    .arrows {
+      font-size: 2em;
+      display: block;
+      margin-top: 20px;
+    }
+    .arrow-up, .arrow-down {
+      font-size: 3em;
+      margin: 10px;
+    }
   </style>
 </head>
 <body>
   <img src="logo.png" alt="Logo Consorzio Vedroni" />
   <div class="box">
-    <div id="codice-sbarra">Caricamento in corso...</div>
+    <div id="codice-sbarra">
+      Codice sbarra del mese:<br>
+      <span class="codice">Caricamento in corso...</span>
+    </div>
+    <div class="arrows">
+      <span class="arrow-up">↑</span>
+      <span class="arrow-down">↓</span>
+    </div>
   </div>
 
   <script>
@@ -71,7 +87,7 @@
 
           if (meseVal === mese && annoVal === anno) {
             document.getElementById("codice-sbarra").innerHTML =
-              `Codice sbarra del mese: <span class="codice">${codice}</span>`;
+              `Codice sbarra del mese:<br><span class="codice">${codice}</span>`;
             return;
           }
         }
